@@ -4,21 +4,11 @@
     path: "{{ DOCKER_INSTALL_SCRIPT }}"
   register: script
 
-- name: Install docker
-  block:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
-
-    - name: Ensure curl is installed
-      apt:
-        name: curl
-
-    - name: Download docker setup script
-      ansible.builtin.get_url:
-        url: https://get.docker.com
-        dest: "{{DOCKER_INSTALL_SCRIPT}}"
-        mode: "0700"
+- name: Download docker setup script
+  ansible.builtin.get_url:
+    url: https://get.docker.com
+    dest: "{{DOCKER_INSTALL_SCRIPT}}"
+    mode: "0700"
   when: not script.stat.exists
 
 - name: Check if installation already ran

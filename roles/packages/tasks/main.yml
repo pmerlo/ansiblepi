@@ -6,3 +6,11 @@
 - name: Update all packages
   apt:
     upgrade: yes
+
+- name: Add basic tools
+  apt:
+    name:
+      - git
+      - curl
+      - htop
+      - httpie
