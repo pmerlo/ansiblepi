@@ -1,0 +1,2 @@
+DOCKER_INSTALL_SCRIPT: ~/getDocker.sh
+DOCKER_INSTALL_LOG: ~/docker_install_log.txt
