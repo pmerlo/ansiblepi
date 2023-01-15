@@ -1,0 +1,24 @@
+---
+- name: Test Playbook
+  hosts: all
+  gather_facts: no
+  remote_user: pi
+  become: yes
+
+  tasks:
+  - name: Create user 'ansibler'
+    user:
+      name: ansibler
+      shell: /bin/bash
+      groups:
+        - adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,render,netdev,spi,i2c,gpio
+  
+  - name: Copy pubkey to ansibler
+    authorized_key:
+      user: ansibler
+      key: "{{lookup('file', '~/.ssh/id_rsa.pub')}}"
+    
+  - name: Enable password-less sudo for ansibler
+    copy:
+      dest: /etc/sudoers.d/010_ansibler-nopasswd
+      content: "ansibler ALL=(ALL) NOPASSWD: ALL\n"

@@ -1,0 +1,23 @@
+---
+- name: Ensure ufw is installed
+  apt:
+    name: ufw
+
+- name: Limit SSH protocol
+  ufw:
+    rule: limit
+    to_port: ssh
+
+- name: Deny incoming connections
+  ufw:
+    direction: incoming
+    default: deny
+
+- name: Allow outgoing connections
+  ufw:
+    direction: outgoing
+    default: allow
+
+- name: Enable firewall
+  ufw:
+    state: enabled

@@ -1,0 +1,13 @@
+---
+- name: Disable USB and HDMI after boot
+  blockinfile:
+    dest: /etc/rc.local
+    block: |
+      echo '1-1' | tee /sys/bus/usb/drivers/usb/unbind
+      /opt/vc/bin/tvservice -o
+
+- name: Disable bluetooth
+  blockinfile:
+    dest: /boot/config.txt
+    block: |
+      dtoverlay=disable-bt
