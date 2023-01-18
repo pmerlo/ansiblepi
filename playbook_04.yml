@@ -47,40 +47,6 @@
       debug:
         var: key_frontend.public_key
 
-    - name: Stop services
-      ansible.builtin.shell: docker compose --file /home/runner/docker-compose.yml stop
-
-    - name: Copy docker compose file
-      ansible.builtin.copy:
-        src: ./docker-compose.yml
-        dest: /home/runner/docker-compose.yml
-        owner: runner
-        group: runner
-        mode: "0644"
-    
-    - name: Clone backend repo
-      ansible.builtin.git:
-        repo: git@github.com:pmerlo/meals-backend.git
-        dest: /home/runner/meals-backend
-        key_file: /home/runner/.ssh/id_rsa_backend
-        accept_hostkey: yes
-        force: yes
-
-    - name: Clone frontend repo
-      ansible.builtin.git:
-        repo: git@github.com:pmerlo/meals-dist.git
-        dest: /home/runner/meals-dist
-        key_file: /home/runner/.ssh/id_rsa_frontend
-        accept_hostkey: yes
-        force: yes
-    
-    - name: Build containers
-      ansible.builtin.shell: docker compose --file /home/runner/docker-compose.yml build
-
-    - name: Launch services
-      ansible.builtin.shell: docker compose --file /home/runner/docker-compose.yml up --detach
-      
-
   post_tasks:
     - name: Restore LED trigger
       command: sudo sh -c "echo heartbeat > /sys/class/leds/led1/trigger"
