@@ -6,8 +6,9 @@
       echo '1-1' | tee /sys/bus/usb/drivers/usb/unbind
       /opt/vc/bin/tvservice -o
 
-- name: Disable bluetooth
+- name: Disable Wi-Fi and Bluetooth
   blockinfile:
     dest: /boot/config.txt
     block: |
+      dtoverlay=disable-wifi
       dtoverlay=disable-bt
